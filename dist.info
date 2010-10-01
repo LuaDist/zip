@@ -1,0 +1,9 @@
+--- This file is part of LuaDist project
+
+name = "zip"
+version = "3.0"
+
+desc = "Info-ZIP zip utility"
+license = "BSD"
+url = "http://www.info-zip.org/Zip.html"
+maintainer = "Peter Drahoš"

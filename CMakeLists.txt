@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2009 LuaDist.
+# Copyright (C) 2007-2012 LuaDist.
 # Submitted by David Manura
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
@@ -6,32 +6,31 @@
 
 # warning: compilation options might not be optical
 
-PROJECT ( zip C )
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-INCLUDE ( dist.cmake )
+project ( zip C )
+cmake_minimum_required ( VERSION 2.8 )
+include ( cmake/dist.cmake )
 
-SET ( SRC_ZIP
-  crc32.c crypt.c deflate.c fileio.c globals.c trees.c ttyio.c
-  util.c zip.c zipfile.c zipup.c )
-IF ( WIN32 AND NOT CYGWIN )
-  SET ( SRC_ZIP ${SRC_ZIP}
-        win32/nt.c win32/win32.c win32/win32i64.c win32/win32zip.c )
-  ADD_DEFINITIONS(-DWIN32 -DNO_ASM)
-ELSE ( WIN32 AND NOT CYGWIN )
-  SET ( SRC_ZIP ${SRC_ZIP} unix/unix.c )
-  ADD_DEFINITIONS(-DUNIX)
-  ADD_DEFINITIONS(-DNO_OFF_T) # simpler
-ENDIF ( WIN32 AND NOT CYGWIN )
+set ( SRC_ZIP crc32.c crypt.c deflate.c fileio.c globals.c trees.c ttyio.c util.c 
+  zip.c zipfile.c zipup.c )
+if ( WIN32 AND NOT CYGWIN )
+  set ( SRC_ZIP ${SRC_ZIP} win32/nt.c win32/win32.c win32/win32i64.c win32/win32zip.c )
+  add_definitions ( -DWIN32 -DNO_ASM )
+else ( WIN32 AND NOT CYGWIN )
+  set ( SRC_ZIP ${SRC_ZIP} unix/unix.c )
+  add_definitions ( -DUNIX )
+  add_definitions ( -DNO_OFF_T )
+  # simpler
+endif ( WIN32 AND NOT CYGWIN )
 
-INCLUDE_DIRECTORIES(.)
+include_directories ( . )
 
-INCLUDE(CheckFunctionExists)
-CHECK_FUNCTION_EXISTS(lchmod HAVE_LCHMOD)
-IF ( NOT HAVE_LCHMOD )
-  ADD_DEFINITIONS(-DNO_LCHMOD)
-ENDIF ( NOT HAVE_LCHMOD )
+include ( CheckFunctionExists )
+check_function_exists ( lchmod HAVE_LCHMOD )
+if ( NOT HAVE_LCHMOD )
+  add_definitions ( -DNO_LCHMOD )
+endif ( NOT HAVE_LCHMOD )
 
-ADD_EXECUTABLE ( zip ${SRC_ZIP} )
+add_executable ( zip ${SRC_ZIP} )
 
-INSTALL ( TARGETS zip RUNTIME DESTINATION ${INSTALL_BIN} )
-INSTALL ( FILES README LICENSE DESTINATION ${INSTALL_DATA} )
+install_executable ( zip  )
+install_data ( README LICENSE )

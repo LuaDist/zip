@@ -1,0 +1,21 @@
+type = "x86_64"
+arch = "Darwin"
+author = "info-zip.org"
+desc = "Info-ZIP zip utility"
+name = "zip"
+maintainer = "Peter Drahoš"
+files = {
+Runtime = {
+[[bin/zip]],
+}
+,
+Data = {
+[[share/zip/README]],
+[[share/zip/LICENSE]],
+}
+,
+}
+
+license = "BSD"
+version = "3.0"
+url = "http://www.info-zip.org/Zip.html"
